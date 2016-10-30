@@ -1,0 +1,1 @@
+../deep-learning-from-scratch/ch03/sample_weight.pkl
