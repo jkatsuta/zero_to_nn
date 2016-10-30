@@ -60,7 +60,7 @@ def calc_accuracy(y, label):
 
 
 def cross_entropy_error(y, label):
-    if y.dim == 1:
+    if y.ndim == 1:
         y = y.reshape(1, y.size)
         label = label.reshape(1, label.size)
     batch_size = y.shape[0]
