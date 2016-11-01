@@ -31,6 +31,12 @@ class TwoLayersNet:
         y = self.predict(x)
         return cross_entropy_error(y, label)
 
+    def accuracy(self, x, label):
+        y = self.predict(x)
+        y = np.argmax(y, axis=1)
+        label = np.argmax(label, axis=1)
+        return np.sum(y == label) / float(y.size)
+
     def numerical_gradient(self, x, label):
         def f_loss(k, v):
             def f(v):
