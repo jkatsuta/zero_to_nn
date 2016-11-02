@@ -38,13 +38,8 @@ class TwoLayersNet:
         return np.sum(y == label) / float(y.size)
 
     def numerical_gradient(self, x, label):
-        def f_loss(k, v):
-            def f(v):
-                self.params[k] = v
-                return self.loss(x, label)
-            return f
-
+        f = lambda v: self.loss(x, label)
         grads = {}
-        for k, v in self.params.items():
-            grads[k] = numerical_gradient(f_loss(k, v), v)
+        for k in self.params.keys():
+            grads[k] = numerical_gradient(f, self.params[k])
         return grads
