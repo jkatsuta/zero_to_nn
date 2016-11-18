@@ -23,7 +23,7 @@ def numerical_gradient(f, x):
         fx_p_h = f(x)
         x[idx] = tmp_val - h
         fx_m_h = f(x)
-        
+
         grad[idx] = (fx_p_h - fx_m_h) / (2 * h)
         x[idx] = tmp_val
         it.iternext()

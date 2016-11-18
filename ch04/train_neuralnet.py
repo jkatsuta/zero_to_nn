@@ -14,12 +14,13 @@ iter_num = 2
 batch_size = 100
 learning_rate = 0.1
 
-net = TwoLayersNet(784, 50, 10)
+net = TwoLayersNet(784, 10, 10)
 
 losses_train = []
 acc_train, acc_test = [], []
-iter_per_epoch = int(x_train.shape[0]/batch_size)
+iter_per_epoch = int(x_train.shape[0] / batch_size)
 for i in range(iter_num):
+    print(i, iter_per_epoch)
     batch_mask = np.random.choice(x_train.shape[0], batch_size)
     x_batch, y_batch = x_train[batch_mask], y_train[batch_mask]
 
