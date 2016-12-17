@@ -4,6 +4,7 @@ import sys
 sys.path.append(os.pardir)
 from common.functions import softmax, cross_entropy_error
 
+
 class MulLayer:
     def __init__(self):
         self.x = None
@@ -20,6 +21,7 @@ class MulLayer:
         dy = dout * self.x
         return dx, dy
 
+
 class AddLayer:
     def __init__(self):
         pass
@@ -32,6 +34,7 @@ class AddLayer:
         dy = dout * 1
         return dx, dy
 
+
 class Relu:
     def __init__(self):
         self.x = None
@@ -42,6 +45,7 @@ class Relu:
 
     def backward(self, dout):
         return np.where(self.x > 0, dout, 0.)
+
 
 class Sigmoid:
     def __init__(self):
@@ -54,6 +58,7 @@ class Sigmoid:
     def backward(self, dout):
         dx = dout * self.out * (1. - self.out)
         return dx
+
 
 class Affine:
     def __init__(self, W, b):
@@ -72,6 +77,7 @@ class Affine:
         self.dW = np.dot(self.x.T, dout)
         self.db = np.sum(dout, axis=0)
         return dx
+
 
 class SoftmaxWithLoss:
     def __init__(self):
@@ -93,3 +99,19 @@ class SoftmaxWithLoss:
         elif self.t.ndim == 2:
             dx = self.y - self.t
         return dx / batch_size
+
+
+class Dropout:
+    def __init__(self, ratio_dropout=0.):
+        self.mask = None
+        self.r_do = ratio_dropout
+
+    def forward(self, x, flg_train):
+        if flg_train:
+            self.mask = np.random.rand(*x.shape) >= self.r_do
+            return x * self.mask
+        else:
+            return x * (1. - self.r_do)
+
+    def backward(self, dout):
+        return dout * self.mask
